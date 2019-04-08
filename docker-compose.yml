@@ -1,0 +1,13 @@
+version: '2.3'
+
+services:
+  dynamixel_controller:
+    build:
+      context: ./dynamixel_controller
+    container_name: dynamixel_controller
+    privileged: true
+    network_mode: host
+    environment:
+      - "ROS_HOSTNAME=$ROS_IP"
+      - "ROS_MASTER_URI=http://$ROS_IP:11311"
+
