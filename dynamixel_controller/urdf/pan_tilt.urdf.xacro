@@ -2,7 +2,6 @@
 
 <robot name="pan_tilt_camera" xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:include filename="/urdf/d435.urdf.xacro"/>
-  <xacro:arg name="d435_mesh_file" default=""/>
   
   <link name="base_link">
     <visual>
@@ -18,8 +17,9 @@
   <link name="pan_link">
     <visual>
       <geometry>
-        <!-- <cylinder length="0.6" radius="0.2"/> -->
-	<box size="0.04 0.03 0.05"/>
+        <mesh filename="package://dynamixel_urdf/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+
+	<!-- <box size="0.04 0.03 0.05"/> -->
       </geometry>
       <material name="green">
         <color rgba="0 1.0 0 1"/>
@@ -30,7 +30,9 @@
   <link name="tilt_link">
     <visual>
       <geometry>
-	<box size="0.04 0.03 0.05"/>
+        <mesh filename="package://dynamixel_urdf/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+
+	<!-- <box size="0.04 0.03 0.05"/> -->
       </geometry>
       <material name="red">
         <color rgba="1.0 0 0 1"/>
@@ -92,7 +94,7 @@
   </joint>
   -->
 
-  <sensor_d435 parent="camera_base_link" mesh_file="$(arg d435_mesh_file)">
+  <sensor_d435 parent="camera_base_link">
     <origin xyz="0.0 0.0 0.035" rpy="0 0 0"/>
   </sensor_d435>
   

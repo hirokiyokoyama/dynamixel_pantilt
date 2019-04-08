@@ -10,7 +10,7 @@ services:
     environment:
       - "ROS_HOSTNAME=$ROS_IP"
       - "ROS_MASTER_URI=http://$ROS_IP:11311"
-    command: ["roslaunch", "/pan_tilt.launch", "d435_mesh_file:=${PWD}/rviz/d435.dae"]
+    command: ["roslaunch", "/pan_tilt.launch"]
 
   realsense:
     image: iory/docker-ros-d415
