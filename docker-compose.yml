@@ -16,6 +16,7 @@ services:
     image: iory/docker-ros-d415
     container_name: realsense
     privileged: true
+    network_mode: host
     environment:
       - "ROS_HOSTNAME=$ROS_IP"
       - "ROS_MASTER_URI=http://$ROS_IP:11311"
