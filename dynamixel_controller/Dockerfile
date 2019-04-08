@@ -4,10 +4,11 @@ LABEL maintainer "hirokiyokoyama <hiroki.yokoyama@okadanet.org>"
 RUN apt-get update && apt-get install -y \
     ros-kinetic-robot-state-publisher \
     ros-kinetic-dynamixel-controllers \
+    ros-kinetic-xacro \
     && rm -rf /var/lib/apt/lists/
 COPY ./pan_tilt.launch /
-COPY ./pan_tilt.urdf /
 COPY ./dynamixel_joint_state_publisher.py /opt/ros/kinetic/lib/robot_state_publisher
+COPY ./urdf /urdf
 COPY ./entrypoint.sh /
 
 ENTRYPOINT ["/entrypoint.sh"]

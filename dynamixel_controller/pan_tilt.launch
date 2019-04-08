@@ -1,5 +1,7 @@
 <launch>
-  <node name="dynamixel_manager"
+    <arg name="d435_mesh_file" default=""/>
+    
+    <node name="dynamixel_manager"
 	pkg="dynamixel_controllers" type="controller_manager.py" required="true" output="screen">
     <rosparam>
       namespace: dynamixel_controller_manager
@@ -51,8 +53,9 @@
 	      --port=pan_tilt
 	      tilt_controller"
 	output="screen"/>
-  
-  <param name="robot_description" textfile="/pan_tilt.urdf"/>
+
+  <param name="robot_description" command="$(find xacro)/xacro d435_mesh_file:=$(arg d435_mesh_file) --inorder '/urdf/pan_tilt.urdf.xacro'"/>
+
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
   <rosparam>
     dynamixel_controllers:
@@ -60,5 +63,5 @@
       - tilt_controller
   </rosparam>
   <node name="joint_state_publisher" pkg="robot_state_publisher" type="dynamixel_joint_state_publisher.py"/>
-  
+
 </launch>
