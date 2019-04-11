@@ -43,7 +43,7 @@
   <link name="camera_base_link">
     <visual>
       <geometry>
-        <cylinder length="0.05" radius="0.02"/>
+        <!--<cylinder length="0.05" radius="0.02"/>-->
       </geometry>
       <material name="gray">
         <color rgba="0.5 0.5 0.5 1"/>
@@ -67,13 +67,13 @@
   <joint name="base_to_pan" type="fixed">
     <parent link="base_link"/>
     <child link="pan_link"/>
-    <origin xyz="0.01 0.0 0.04" rpy="0 -1.5708 0"/>
+    <origin xyz="0.0 0.0 0.04" rpy="1.5708 0 0"/>
   </joint>
 
   <joint name="pan_joint" type="revolute">
     <parent link="pan_link"/>
     <child link="tilt_link"/>
-    <origin xyz="0.05 0.0 0.01" rpy="0 1.5708 0"/>
+    <origin xyz="0.0 0.065 0.0" rpy="-1.5708 0 0"/>
     <axis xyz="0 0 1"/>
     <limit effort="1000.0" lower="-1.5" upper="1.5" velocity="0.5"/>
   </joint>
@@ -81,7 +81,7 @@
   <joint name="tilt_joint" type="revolute">
     <parent link="tilt_link"/>
     <child link="camera_base_link"/>
-    <origin xyz="0.0 0.0 0.02" rpy="0 0 -1.5708"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
     <axis xyz="0 1 0"/>
     <limit effort="1000.0" lower="-1.5" upper="1.5" velocity="0.5"/>
   </joint>
@@ -95,7 +95,7 @@
   -->
 
   <sensor_d435 parent="camera_base_link">
-    <origin xyz="0.0 0.0 0.035" rpy="0 0 0"/>
+    <origin xyz="0.0 0.0 0.025" rpy="0 0 0"/>
   </sensor_d435>
   
 </robot>
