@@ -1,15 +1,13 @@
-FROM ros:kinetic
+FROM hirokiyokoyama/ros-jp42
 LABEL maintainer "hirokiyokoyama <h-yokoyama@craft-server.co.jp>"
 # install ros tutorials packages
 RUN apt-get update && apt-get install -y \
-    ros-kinetic-robot-state-publisher \
-    ros-kinetic-dynamixel-controllers \
-    ros-kinetic-xacro \
+    ros-melodic-robot-state-publisher \
+    ros-melodic-dynamixel-controllers \
+    ros-melodic-xacro \
     && rm -rf /var/lib/apt/lists/
 COPY ./pan_tilt.launch /
 COPY ./dynamixel_joint_state_publisher.py /opt/ros/kinetic/lib/robot_state_publisher
 COPY ./urdf /urdf
-COPY ./entrypoint.sh /
 
-ENTRYPOINT ["/entrypoint.sh"]
 CMD ["roslaunch", "/pan_tilt.launch"]
