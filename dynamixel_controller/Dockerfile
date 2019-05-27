@@ -6,18 +6,21 @@ RUN apt-get update && apt-get install -y \
     ros-kinetic-dynamixel-controllers \
     ros-kinetic-xacro \
     && rm -rf /var/lib/apt/lists/*
-COPY ./pan_tilt.launch /
 COPY ./dynamixel_joint_state_publisher.py /opt/ros/kinetic/lib/robot_state_publisher
 COPY ./urdf /urdf
+COPY ./launch /launch
 
 # to resolve *.local hostname
 RUN apt-get update && apt-get install --no-install-recommends -y \
     avahi-daemon \
     libnss-mdns \
     && rm -rf /var/lib/apt/lists/* \
-    && sed -i -e 's/#enable-dbus=yes/enable-dbus=no/g' /etc/avahi/avahi-daemon.conf 
+    && sed -i -e 's/#enable-dbus=yes/enable-dbus=no/g' /etc/avahi/avahi-daemon.conf
+
+RUN cd / && git clone https://github.com/arebgun/dynamixel_motor.git
 
 COPY ./entrypoint.sh /
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["roslaunch", "/pan_tilt.launch"]
+CMD ["roslaunch", "/launch/pan_tilt.launch"]
+
