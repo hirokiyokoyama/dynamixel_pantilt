@@ -20,24 +20,24 @@
         module: joint_torque_controller
         type: JointTorqueController
       joint_name: pan_joint
-      joint_speed: 1.17
+      joint_speed: 1.5
       motor:
         id: 1
-        init: 0
+        init: 512
         min: 0
-        max: 4095
+        max: 1023
     tilt_controller:
       controller:
         package: dynamixel_controllers
         module: joint_torque_controller
         type: JointTorqueController
       joint_name: tilt_joint
-      joint_speed: 1.17
+      joint_speed: 1.5
       motor:
         id: 2
-        init: 0
+        init: 512
         min: 0
-        max: 4095
+        max: 1023
   </rosparam>
     
   <node name="pan_controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
