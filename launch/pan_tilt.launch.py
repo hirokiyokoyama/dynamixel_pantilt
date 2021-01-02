@@ -15,7 +15,7 @@ pantilt_xacro = os.path.join(
 def generate_launch_description():
     manager = launch_ros.actions.Node(
         package = 'dynamixel_controllers',
-        node_executable = 'controller_manager',
+        node_executable = 'controller_manager.py',
         output = 'screen',
         node_name = 'dynamixel_manager',
         parameters = [manager_params]
@@ -23,7 +23,7 @@ def generate_launch_description():
 
     spawner = launch_ros.actions.Node(
         package = 'dynamixel_controllers',
-        node_executable = 'controller_spawner',
+        node_executable = 'controller_spawner.py',
         output = 'screen',
         node_name = 'dynamixel_controller_spawner',
         parameters = [spawner_params],
@@ -37,7 +37,7 @@ def generate_launch_description():
 
     joint_state_publisher = launch_ros.actions.Node(
         package = 'dynamixel_pantilt',
-        node_executable = 'dynamixel_joint_state_publisher',
+        node_executable = 'dynamixel_joint_state_publisher.py',
         output = 'screen',
         node_name = 'joint_state_publisher'
     )
@@ -45,7 +45,7 @@ def generate_launch_description():
     import tempfile
     import xacro
     with tempfile.NamedTemporaryFile(mode='w', delete=False) as urdf_file:
-        doc = xacro.process_file(xacro_path)
+        doc = xacro.process_file(pantilt_xacro)
         robot_desc = doc.toprettyxml(indent='  ')
         urdf_file.write(robot_desc)
         

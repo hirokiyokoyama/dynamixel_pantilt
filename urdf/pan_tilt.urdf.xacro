@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 
 <robot name="pan_tilt_camera" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="package://dynamixel_pantilt/urdf/d435.urdf.xacro"/>
+  <!--<xacro:include filename="package://dynamixel_pantilt/urdf/d435.urdf.xacro"/>-->
+  <xacro:include filename="d435.urdf.xacro"/>
   
   <link name="base_link">
     <visual>
@@ -17,7 +18,7 @@
   <link name="pan_link">
     <visual>
       <geometry>
-        <mesh filename="package://dynamixel_pantilt/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+	<mesh filename="../meshes/ax12.stl" scale="0.001 0.001 0.001"/>
 
 	<!-- <box size="0.04 0.03 0.05"/> -->
       </geometry>
@@ -30,7 +31,7 @@
   <link name="tilt_link">
     <visual>
       <geometry>
-        <mesh filename="package://dynamixel_urdf/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+        <mesh filename="../meshes/ax12.stl" scale="0.001 0.001 0.001"/>
 
 	<!-- <box size="0.04 0.03 0.05"/> -->
       </geometry>

@@ -1,10 +1,8 @@
 dynamixel_manager:
   ros__parameters:
     namespace: dynamixel_controller_manager
-    serial_ports:
-      pan_tilt:
-        port_name: /dev/ttyUSB0
-	baud_rate: 1000000
-	min_motor_id: 1
-	max_motor_id: 3
-	update_rate: 10
+    serial_ports.pantilt.port_name: /dev/ttyUSB0
+    serial_ports.pantilt.baud_rate: 1000000
+    serial_ports.pantilt.min_motor_id: 1
+    serial_ports.pantilt.max_motor_id: 3
+    serial_ports.pantilt.update_rate: 10
