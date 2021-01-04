@@ -10,7 +10,7 @@
   <author>Hiroki Yokoyama</author>
 
   <exec_depend>dynamixel_controllers</exec_depend>
-  <exec_depend></exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
   
   <export>
     <build_type>ament_cmake</build_type>
