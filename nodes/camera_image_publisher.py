@@ -16,11 +16,11 @@ class CameraImagePublisher(Node):
         self.cv_bridge = cv_bridge.CvBridge()
 
     def spin(self):
-        cap = cv2.VideoCapture(1)
+        cap = cv2.VideoCapture(0)
         
         while rclpy.ok():
             ret, img = cap.read()
-            if no ret:
+            if not ret:
                 self.get_logger().fatal('Cannot capture camera image.')
                 break
             msg = cv2_to_imgmsg(img)
