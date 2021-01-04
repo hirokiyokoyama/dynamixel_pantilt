@@ -24,7 +24,7 @@ class CameraImagePublisher(Node):
                 self.get_logger().fatal('Cannot capture camera image.')
                 break
             msg = self.cv_bridge.cv2_to_imgmsg(img)
-            self.joint_states_pub.publish(msg)
+            self.pub.publish(msg)
         
 def main(args=None):
     rclpy.init(args=args)
