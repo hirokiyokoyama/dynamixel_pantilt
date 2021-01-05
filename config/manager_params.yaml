@@ -1,4 +1,4 @@
-dynamixel_manager:
+dynamixel_controller_manager:
   ros__parameters:
     namespace: dynamixel_controller_manager
     serial_ports.pantilt.port_name: /dev/ttyUSB0
