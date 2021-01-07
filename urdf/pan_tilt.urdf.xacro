@@ -18,7 +18,7 @@
   <link name="pan_link">
     <visual>
       <geometry>
-	<mesh filename="../meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+	<mesh filename="package://dynamixel_pantilt/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
 
 	<!-- <box size="0.04 0.03 0.05"/> -->
       </geometry>
@@ -31,7 +31,7 @@
   <link name="tilt_link">
     <visual>
       <geometry>
-        <mesh filename="../meshes/ax12.stl" scale="0.001 0.001 0.001"/>
+	<mesh filename="package://dynamixel_pantilt/meshes/ax12.stl" scale="0.001 0.001 0.001"/>
 
 	<!-- <box size="0.04 0.03 0.05"/> -->
       </geometry>

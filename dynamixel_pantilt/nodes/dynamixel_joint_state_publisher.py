@@ -3,6 +3,7 @@
 import rclpy
 from rclpy.node import Node
 
+from rcl_interfaces.srv import GetParameters
 from sensor_msgs.msg import JointState as JointState
 from dynamixel_msgs.msg import JointState as JointStateDynamixel
 
@@ -17,27 +18,29 @@ class JointStatePublisher(Node):
     def __init__(self):
         super().__init__('dynamixel_joint_state_publisher')
         
-        rate = self.declare_parameter('rate', 20).value
-        r = self.create_rate(rate)
-        
         self.controllers = self.declare_parameter('dynamixel_controllers', []).value
         self.joint_states = dict({})
         
         for controller in sorted(self.controllers):
-            joint = controller#TODO: rospy.get_param(controller)['joint_name']
+            self.get_logger().info('Getting joint name from %s' % controller)
+            client = self.create_client(GetParameters, '/{}/get_parameters'.format(controller))
+            client.wait_for_service()
+            future = client.call_async(GetParameters.Request(names=['joint_name']))
+            rclpy.spin_until_future_complete(self, future)
+            joint = None
+            if future.result():
+                joint = future.result().values[0].string_value
+            if joint is None:
+                self.get_logger().error('Could not get joint name from %S' % controller)
+                continue
             self.joint_states[joint] = JointStateMessage(joint, 0.0, 0.0, 0.0)
+            self.create_subscription(JointStateDynamixel, '/{}/state'.format(controller), self.controller_state_handler, 1)
             
-        # Start controller state subscribers
-        [self.create_subscription(JointStateDynamixel, c + '/state', self.controller_state_handler) for c in self.controllers]
-     
         # Start publisher
         self.joint_states_pub = self.create_publisher(JointState, '/joint_states', 1)
-       
+        rate = self.declare_parameter('rate', 20).value
         self.get_logger().info("Starting Dynamixel Joint State Publisher at " + str(rate) + "Hz")
-       
-        while rclpy.ok():
-            self.publish_joint_states()
-            r.sleep()
+        self.timer = self.create_timer(1./rate, self.publish_joint_states)
            
     def controller_state_handler(self, msg):
         js = JointStateMessage(msg.name, msg.current_pos, msg.velocity, msg.load)

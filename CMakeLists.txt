@@ -4,8 +4,8 @@ project(dynamixel_pantilt)
 find_package(ament_cmake REQUIRED)
 
 install(PROGRAMS
-  nodes/camera_image_publisher.py
-  nodes/dynamixel_joint_state_publisher.py
+  dynamixel_pantilt/nodes/camera_image_publisher.py
+  dynamixel_pantilt/nodes/dynamixel_joint_state_publisher.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

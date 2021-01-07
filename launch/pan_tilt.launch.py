@@ -11,6 +11,8 @@ spawner_params = os.path.join(
     share_dir, 'config', 'spawner_params.yaml')
 pantilt_xacro = os.path.join(
     share_dir, 'urdf', 'pan_tilt.urdf.xacro')
+camera_calibration = os.path.join(
+    share_dir, 'config', 'camera.yaml')
 
 def generate_launch_description():
     manager = launch_ros.actions.Node(
@@ -39,7 +41,10 @@ def generate_launch_description():
         package = 'dynamixel_pantilt',
         node_executable = 'dynamixel_joint_state_publisher.py',
         output = 'screen',
-        node_name = 'joint_state_publisher'
+        node_name = 'joint_state_publisher',
+        parameters = [{
+            'dynamixel_controllers': ['pan_controller', 'tilt_controller'] 
+        }]
     )
 
     import tempfile
@@ -63,6 +68,31 @@ def generate_launch_description():
         arguments = [urdf_file.name]
     )
 
+    camera = launch_ros.actions.Node(
+        package = 'usb_camera_driver',
+        node_executable = 'usb_camera_driver_node',
+        output = 'screen',
+        node_name = 'camera',
+        parameters = [{
+            'image_width': 640,
+            'image_height': 480,
+            'frame_id': 'camera_color_optical_frame',
+            'camera_calibration_file': 'file://'+camera_calibration
+        }]
+    )
+
+    camera_compress = launch_ros.actions.Node(
+        package = 'image_transport',
+        node_executable = 'republish',
+        output = 'screen',
+        node_name = 'camera_compress',
+        remappings = [
+            ('/in', '/image'),
+            ('/out/compressed', '/image_compressed')
+        ],
+        arguments = ['raw', 'compressed']
+    )
+
     def on_exit(context, *args, **kwargs):
         os.remove(urdf_file.name)
         
@@ -75,8 +105,10 @@ def generate_launch_description():
     
     return launch.LaunchDescription([
         manager,
-        #spawner,
-        #robot_state_publisher,
-        #joint_state_publisher,
-        #register_on_exit
+        spawner,
+        robot_state_publisher,
+        joint_state_publisher,
+        camera,
+        #camera_compress,
+        register_on_exit
     ])
